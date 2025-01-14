@@ -1,0 +1,15 @@
+cradle:
+  multi:
+    # - path: "ignore/"
+    #   config: {cradle: {none: }}
+    - path: "src"
+      config: {cradle: {cabal: {component: "tiles:tiles-exe"}}}
+    
+    - path: "lib"
+      config: {cradle: {cabal: {component: "lib:tiles"}}}
+  
+    - path: "test"
+      config: {cradle: {cabal: {component: "tiles:tiles-test"}}}
+    
+    - path: "bench"
+      config: {cradle: {cabal: {component: "tiles:tiles-bench"}}}

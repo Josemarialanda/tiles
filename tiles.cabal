@@ -1,0 +1,112 @@
+cabal-version:   2.4
+name:            tiles
+version:         0
+tested-with:     GHC ==8.6.3 || ==8.8.3 || ==8.10.5
+description:     2048 roguelike game.
+author:          José María Landa Chávez
+maintainer:      José María Landa Chávez - josemaria.landa@gmail.com
+copyright:       2024-03-03 José María Landa Chávez
+build-type:      Simple
+extra-doc-files: 
+  README.md
+  CHANGELOG.md
+license:         MIT
+license-file:    LICENSE
+  
+common common-options
+  build-depends:      base >=4.9 && <5
+  default-language:   Haskell2010
+  ghc-options:        -Wall -Werror
+  default-extensions: DataKinds,
+                      TypeOperators,
+                      ScopedTypeVariables,
+                      TypeApplications,
+                      RecordWildCards,
+                      OverloadedStrings,
+                      PolyKinds,
+                      FlexibleContexts,
+                      ConstraintKinds,
+                      ViewPatterns,
+                      LambdaCase,
+                      GeneralizedNewtypeDeriving,
+                      TupleSections,
+                      InstanceSigs,
+                      DeriveFunctor,
+                      NamedFieldPuns,
+                      TypeFamilies,
+                      FlexibleInstances,
+                      UndecidableInstances,
+                      DeriveDataTypeable,
+                      OverloadedRecordDot,
+                      TemplateHaskell,
+                      MultiWayIf
+                      GADTs
+                      RankNTypes
+  ghc-options:
+
+executable tiles-exe
+  import:         common-options
+  hs-source-dirs: src
+  main-is:        Main.hs
+  ghc-options:    -threaded -rtsopts -with-rtsopts=-N
+  build-depends:  tiles, random, pretty-simple, free, containers, process, polysemy
+
+library
+  import:          common-options
+  hs-source-dirs:  lib
+  exposed-modules: 
+      Tiles.Game
+    , Tiles.Tiles
+    , Tiles.Grid
+    , Tiles.Modifiers
+    , Tiles.Types
+    , Tiles.Utils.Default
+    , Tiles.Utils.Helpers
+    , Tiles.Utils.Random
+    , Tiles.Utils.OneOfN
+    , Tiles.Utils.Terminal
+    , Tiles.TUI
+  other-modules: 
+      Tiles.Action
+    , Tiles.Validation
+  build-depends: 
+      free
+    , template-haskell
+    , transformers
+    , containers
+    , mtl
+    , random
+    , first-class-families
+    , lens
+    , split
+    , text
+    , pretty-simple
+    , polysemy
+    , aeson
+    , process
+  
+test-suite tiles-test
+  import:         common-options
+  type:           exitcode-stdio-1.0
+  hs-source-dirs: test
+  main-is:        Spec.hs
+  build-depends:
+    , tiles
+    , hspec
+    , HUnit
+    , tasty
+    , tasty-hunit
+    , containers
+    , random
+    , QuickCheck
+  ghc-options:    -threaded -rtsopts -with-rtsopts=-N
+
+benchmark tiles-bench
+  import:         common-options
+  type:           exitcode-stdio-1.0
+  hs-source-dirs: bench
+  main-is:        Main.hs
+  build-depends:
+    , tiles
+    , criterion
+  ghc-options:    -threaded -rtsopts -with-rtsopts=-N
