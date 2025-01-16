@@ -2,7 +2,7 @@
 
 ## How to run (you need nix + flakes installed)
 
-Inside the project main root directory run:
+Inside the project root directory run:
 ```bash
 nix run
 ```
